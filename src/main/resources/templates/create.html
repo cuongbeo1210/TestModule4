@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Tạo thành phố</h3>
+
+<div id="form">
+    <form th:action="@{/create}" th:object="${city} " method="POST">
+        <div>
+            <label>Tên</label>
+            <th:block th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></th:block>
+            <label>
+                <input type="text" th:field="*{name}" required/>
+            </label>
+        </div>
+        <div>
+            <label>Quốc gia</label>
+            <select th:field="*{country}">
+                <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.country}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Diện tích</label>
+            <th:block th:if="${#fields.hasErrors('area')}" th:errors="*{area}" style="color: red"></th:block>
+            <label>
+                <input type="text" th:field="*{area}" required/>
+            </label>
+        </div>
+        <div>
+            <label>Dân số</label>
+            <th:block th:if="${#fields.hasErrors('population')}" th:errors="*{population}" style="color:red"></th:block>
+            <input type="text" th:field="*{population}" required/>
+        </div>
+        <div>
+            <label>GDP</label>
+            <th:block th:if="${#fields.hasErrors('gdp')}" th:errors="*{gdp}" style="color: red"></th:block>
+            <label>
+                <input type="text" th:field="*{gdp}" required/>
+            </label>
+        </div>
+        <div>
+            <label>Giới thiệu</label>
+            <th:block th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red"></th:block>
+            <label>
+                <input type="text" th:field="*{description}" required/>
+            </label>
+        </div>
+        <button type="submit">Nhập thành phố</button>
+        <a role="button" th:href="@{/}">Thoát</a>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

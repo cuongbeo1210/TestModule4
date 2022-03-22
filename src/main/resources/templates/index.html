@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout::head">
+</head>
+<body>
+<h3><a style="text-decoration: none; color: white" th:href="@{/}">Danh sách thành phố</a></h3>
+<p>
+  <a th:href="@{/create}">
+    Thêm Thành Phố
+  </a>
+</p>
+
+<div class="notify">
+  <div th:if="${success}">
+    <span th:text="${success}"></span>
+  </div>
+</div>
+
+<form>
+  Search by first name:
+  <input name="regex" type="text" th:value="${regex}"/>
+  <input type="submit" value="Search"/>
+</form>
+
+<table id = "customers">
+  <thead>
+  <tr>
+    <th>STT</th>
+    <th>Thành Phố</th>
+    <th>Quốc Gia</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="city : ${cities}">
+    <td th:text="${city.getId()}"></td>
+    <td><a th:text="${city.getName()}" th:href="@{/view/{id}(id=${city.getId()})}"></a></td>
+    <td th:text="${city.country.country}"></td>
+    <td><a role="button" th:href="@{/edit/{id}(id=${city.getId()})}">Chỉnh sửa</a> |
+      <a role="button" th:href="@{/delete/{id}(id=${city.getId()})}" onclick="return confirm('Bạn có chắc chắn muốn xóa thành phố này?')">Xóa</a></td>
+  </tr>
+  </tbody>
+</table>
+
+<div>
+  <a th:href="@{'/'(page=${cities.number - 1},regex=${regex})}" th:if="${cities.hasPrevious()}">Previous</a>
+  <span th:text="${cities.number + 1}"></span>/<span th:text="${cities.totalPages}"></span>
+  <a th:href="@{'/'(page=${cities.number + 1},regex=${regex})}" th:if="${cities.hasNext()}">Next</a>
+</div>
+
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

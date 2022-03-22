@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Cập nhật thành phố</h3>
+
+<div id="form">
+  <form th:action="@{/edit/{id}(id=${city.getId()})}" th:object="${city} " method="POST">
+    <div>
+      <label>Tên</label>
+      <th:block th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color:red"></th:block>
+      <input type="text" th:field="*{name}" required/>
+    </div>
+    <div>
+      <label>Quốc gia</label>
+      <select th:field="*{country}">
+        <option th:each="c : ${countries}" th:value="${c.id}" th:text="${c.country}" th:selected="${c.id} == *{country.id}" />
+      </select>
+    </div>
+    <div>
+      <label>Diện tích</label>
+      <th:block th:if="${#fields.hasErrors('area')}" th:errors="*{area}" style="color:red"></th:block>
+      <input type="text" th:field="*{area}" required/>
+    </div>
+    <div>
+      <label>Dân số</label>
+      <th:block th:if="${#fields.hasErrors('population')}" th:errors="*{population}"></th:block>
+      <input type="text" th:field="*{population}" required/>
+    </div>
+    <div>
+      <label>GDP</label>
+      <th:block th:if="${#fields.hasErrors('gdp')}" th:errors="*{gdp}"></th:block>
+      <input type="text" th:field="*{gdp}" required/>
+    </div>
+    <div>
+      <label>Giới thiệu</label>
+      <th:block th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></th:block>
+      <label>
+        <input type="text" th:field="*{description}" required/>
+      </label>
+    </div>
+    <button type="submit">Cập Nhật</button>
+    <a role="button" th:href="@{/}">Thoát</a>
+  </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
